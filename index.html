@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TLE INFORMÁTICA | Sistema ERP & Gestão de Assistência Técnica</title>
+
+  <!-- Fontes Google & Ícones FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+
+  <!-- ==========================================
+       TELA DE LOGIN
+       ========================================== -->
+  <div id="login-screen">
+    <div class="login-backdrop-glow"></div>
+    <div class="login-card">
+      <div class="login-logo-wrap">
+        <img src="./assets/logo.jpg" alt="TLE INFORMÁTICA Logo" class="login-logo-img"
+          onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&auto=format&fit=crop&q=80'">
+      </div>
+      <h1 class="login-title">TLE INFORMÁTICA</h1>
+      <p class="login-subtitle">Sistema ERP & Gestão Especializada em T.I.</p>
+
+      <form id="login-form" class="login-form">
+        <div class="input-group">
+          <label><i class="fas fa-user"></i> E-mail de Acesso</label>
+          <div class="input-wrapper">
+            <input type="text" id="login-username" class="input-field" placeholder="Digite seu e-mail"
+              value="thallesfl2021@gmail.com" required autocomplete="username">
+            <i class="fas fa-user-shield"></i>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fas fa-lock"></i> Senha de Acesso</label>
+          <div class="input-wrapper">
+            <input type="password" id="login-password" class="input-field" placeholder="Digite sua senha"
+              value="Brasil2026@" required autocomplete="current-password">
+            <i class="fas fa-key"></i>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          <i class="fas fa-sign-in-alt"></i> Acessar Sistema
+        </button>
+      </form>
+
+      <div class="login-demo-hint">
+        <i class="fas fa-user-check" style="color: var(--primary-cyan);"></i> Sistema TLE Informática Online
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       CONTAINER PRINCIPAL DO ERP (APP)
+       ========================================== -->
+  <div id="app-container" style="display: none;">
+
+    <!-- SIDEBAR DE NAVEGAÇÃO -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="./assets/logo.jpg" alt="TLE Logo" class="brand-logo" onerror="this.style.display='none'">
+        <div class="brand-info">
+          <div class="brand-name">TLE INFORMÁTICA</div>
+          <div class="brand-badge">SISTEMA ERP ONLINE</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Principal</div>
+        <a href="#dashboard" class="nav-item active" data-tab="tab-dashboard">
+          <div class="nav-item-icon"><i class="fas fa-chart-line"></i></div>
+          <span>Visão Geral</span>
+        </a>
+
+        <div class="nav-section-title">Módulos do Sistema</div>
+        <a href="#clientes" class="nav-item" data-tab="tab-clientes">
+          <div class="nav-item-icon"><i class="fas fa-users"></i></div>
+          <span>CLIENTES</span>
+        </a>
+
+        <a href="#produtos" class="nav-item" data-tab="tab-produtos">
+          <div class="nav-item-icon"><i class="fas fa-boxes-stacked"></i></div>
+          <span>PRODUTOS</span>
+        </a>
+
+        <a href="#servicos" class="nav-item" data-tab="tab-servicos">
+          <div class="nav-item-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+          <span>SERVIÇOS</span>
+        </a>
+
+        <a href="#ordens" class="nav-item" data-tab="tab-ordens">
+          <div class="nav-item-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+          <span>ORDEM DE SERVIÇOS</span>
+          <span class="nav-badge" id="nav-badge-os">0</span>
+        </a>
+
+        <a href="#anotacoes" class="nav-item" data-tab="tab-anotacoes">
+          <div class="nav-item-icon"><i class="fas fa-clipboard-list"></i></div>
+          <span>ANOTAÇÕES</span>
+        </a>
+
+        <div class="nav-section-title">Administração</div>
+        <a href="#configuracoes" class="nav-item" data-tab="tab-configuracoes" id="nav-item-configuracoes">
+          <div class="nav-item-icon" style="color: var(--primary-cyan);"><i class="fas fa-gear"></i></div>
+          <span>CONFIGURAÇÕES</span>
+          <span class="nav-badge nav-badge-sheets" id="sidebar-sheets-badge">OFFLINE</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="user-avatar" id="profile-avatar">T</div>
+          <div class="user-details">
+            <div class="user-name" id="profile-user-name">Thalles - Admin</div>
+            <div class="user-role" id="profile-user-role">Administrador</div>
+          </div>
+          <button class="btn-logout" id="btn-logout" title="Sair do Sistema">
+            <i class="fas fa-power-off"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- WRAPPER DO CONTEÚDO PRINCIPAL -->
+    <div class="main-wrapper">
+
+      <!-- BARRA SUPERIOR (TOPBAR) -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobile-menu-toggle" title="Menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="page-breadcrumb">
+            <i class="fas fa-bolt" style="color: var(--primary-cyan);"></i>
+            <span class="page-title-badge" id="page-breadcrumb-title">Visão Geral & Métricas</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Botão Status & Conexão Google Sheets (Protegido) -->
+          <button class="btn-sheets-badge" id="topbar-sheets-btn" onclick="SettingsModule.openGoogleSheetsAccess()"
+            title="Configurações e Banco de Dados Google Sheets (Requer Senha)">
+            <i class="fas fa-table-cells" style="color: #10b981;"></i>
+            <span id="topbar-sheets-text">Google Sheets</span>
+            <span class="status-indicator-pill offline" id="topbar-sheets-pill"></span>
+          </button>
+
+          <div class="system-status-indicator">
+            <span class="status-dot"></span>
+            <span>Sistema Online</span>
+          </div>
+
+          <button class="quick-action-btn" onclick="ServiceOrdersModule.openAddModal()">
+            <i class="fas fa-plus"></i>
+            <span>Nova O.S.</span>
+          </button>
+
+          <!-- Ferramentas de Backup & Reset -->
+          <button class="btn-icon" title="Exportar Backup do Banco de Dados (JSON)"
+            onclick="SystemBackup.exportDatabase()">
+            <i class="fas fa-download"></i>
+          </button>
+          <button class="btn-icon" title="Importar / Restaurar Backup (JSON)"
+            onclick="document.getElementById('backup-file-input').click()">
+            <i class="fas fa-upload"></i>
+          </button>
+          <button class="btn-icon" title="Restaurar Dados de Exemplo Padrão" onclick="SystemBackup.resetDemoData()">
+            <i class="fas fa-rotate-left"></i>
+          </button>
+          <input type="file" id="backup-file-input" style="display: none;" accept=".json">
+        </div>
+      </header>
+
+      <!-- CORPO PRINCIPAL DE CONTEÚDO -->
+      <main class="content-body">
+
+        <!-- ==========================================
+             ABA 0: VISÃO GERAL (DASHBOARD)
+             ========================================== -->
+        <section id="tab-dashboard" class="tab-pane active">
+          <!-- Grade de Estatísticas -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon blue">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Faturamento Total O.S.</span>
+                <span class="stat-value" id="stat-faturamento">R$ 0,00</span>
+                <span class="stat-sub">Receita acumulada em ordens</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon amber">
+                <i class="fas fa-microchip"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">O.S. Em Andamento</span>
+                <span class="stat-value" id="stat-os-ativas">0</span>
+                <span class="stat-sub">Equipamentos em bancada</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon green">
+                <i class="fas fa-user-check"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Clientes Ativos</span>
+                <span class="stat-value" id="stat-clientes">0</span>
+                <span class="stat-sub">Cadastros no sistema</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon purple">
+                <i class="fas fa-triangle-exclamation"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Alerta Estoque Baixo</span>
+                <span class="stat-value" id="stat-estoque-baixo">0</span>
+                <span class="stat-sub">Itens precisando de reposição</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grade de Painéis Rápidos -->
+          <div style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 24px;">
+            <!-- Ordens Recentes -->
+            <div class="tech-card">
+              <div class="view-header" style="margin-bottom: 16px;">
+                <div class="view-heading">
+                  <h3 style="font-size: 1.15rem;"><i class="fas fa-clock-rotate-left"
+                      style="color: var(--primary-cyan);"></i> Ordens de Serviço Recentes</h3>
+                  <p>Últimos chamados técnicos registrados na assistência</p>
+                </div>
+                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;"
+                  onclick="Navigation.switchTab('tab-ordens')">
+                  Ver Todas
+                </button>
+              </div>
+
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>O.S. #</th>
+                      <th>Cliente</th>
+                      <th>Equipamento</th>
+                      <th>Status</th>
+                      <th>Total</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboard-recent-os-tbody">
+                    <!-- Preenchido via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Alertas e Ações Rápidas -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              <!-- Alerta de Estoque -->
+              <div class="tech-card">
+                <div class="view-heading" style="margin-bottom: 14px;">
+                  <h3 style="font-size: 1.1rem;"><i class="fas fa-boxes-stacked" style="color: var(--warning);"></i>
+                    Reposição de Estoque</h3>
+                  <p>Peças que atingiram nível crítico de estoque</p>
+                </div>
+                <div id="dashboard-stock-alerts">
+                  <!-- Preenchido via JS -->
+                </div>
+              </div>
+
+              <!-- Atalhos Rápidos -->
+              <div class="tech-card">
+                <div class="view-heading" style="margin-bottom: 14px;">
+                  <h3 style="font-size: 1.1rem;"><i class="fas fa-bolt" style="color: var(--primary-cyan);"></i> Ações
+                    Rápidas</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                  <button class="btn btn-secondary" onclick="ClientsModule.openAddModal()">
+                    <i class="fas fa-user-plus" style="color: var(--primary-cyan);"></i> Novo Cliente
+                  </button>
+                  <button class="btn btn-secondary" onclick="ProductsModule.openAddModal()">
+                    <i class="fas fa-box-open" style="color: var(--success);"></i> Novo Produto
+                  </button>
+                  <button class="btn btn-secondary" onclick="ServicesModule.openAddModal()">
+                    <i class="fas fa-tools" style="color: var(--info);"></i> Novo Serviço
+                  </button>
+                  <button class="btn btn-secondary" onclick="NotesModule.openAddModal()">
+                    <i class="fas fa-note-sticky" style="color: var(--purple);"></i> Nova Anotação
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             ABA 1: CLIENTES
+             ========================================== -->
+        <section id="tab-clientes" class="tab-pane">
+          <div class="view-header">
+            <div class="view-heading">
+              <h2><i class="fas fa-users" style="color: var(--primary-cyan);"></i> Gestão de Clientes</h2>
+              <p>Cadastro, histórico de equipamentos e canais de contato dos clientes</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-tech" onclick="ClientsModule.openAddModal()">
+                <i class="fas fa-user-plus"></i> Novo Cliente
+              </button>
+            </div>
+          </div>
+
+          <!-- Barra de Busca -->
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="client-search-input" class="search-input"
+                placeholder="Buscar por Nome, CPF/CNPJ, Telefone ou Cidade...">
+            </div>
+            <div class="filter-actions">
+              <span class="badge badge-aprovado" id="clients-count-badge">0 Clientes</span>
+            </div>
+          </div>
+
+          <!-- Tabela de Clientes -->
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome / Razão</th>
+                  <th>WhatsApp / Contato</th>
+                  <th>Cidade/UF</th>
+                  <th>Equipamentos Registrados</th>
+                  <th>Data Cadastro</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="clients-table-tbody">
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             ABA 2: PRODUTOS
+             ========================================== -->
+        <section id="tab-produtos" class="tab-pane">
+          <div class="view-header">
+            <div class="view-heading">
+              <h2><i class="fas fa-boxes-stacked" style="color: var(--primary-cyan);"></i> Produtos & Peças de Reposição
+              </h2>
+              <p>Controle de inventário de hardware, periféricos, cabos e suprimentos de informática</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-tech" onclick="ProductsModule.openAddModal()">
+                <i class="fas fa-plus"></i> Novo Produto
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros de Produtos -->
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="product-search-input" class="search-input"
+                placeholder="Buscar produto por Nome, SKU ou Fornecedor...">
+            </div>
+            <div class="filter-actions">
+              <select id="product-category-filter" class="select-filter">
+                <option value="">Todas as Categorias</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Armazenamento">Armazenamento (SSD/HD)</option>
+                <option value="Periféricos">Periféricos</option>
+                <option value="Cabos">Cabos & Adaptadores</option>
+                <option value="Outros">Outros Suprimentos</option>
+              </select>
+              <span class="badge badge-aprovado" id="products-count-badge">0 Itens</span>
+            </div>
+          </div>
+
+          <!-- Tabela de Produtos -->
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Produto / Descrição</th>
+                  <th>Categoria</th>
+                  <th>Custo (R$)</th>
+                  <th>Venda (R$)</th>
+                  <th>Margem</th>
+                  <th>Estoque Atual</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="products-table-tbody">
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             ABA 3: SERVIÇOS
+             ========================================== -->
+        <section id="tab-servicos" class="tab-pane">
+          <div class="view-header">
+            <div class="view-heading">
+              <h2><i class="fas fa-screwdriver-wrench" style="color: var(--primary-cyan);"></i> Catálogo de Serviços de
+                T.I.</h2>
+              <p>Tabela de serviços técnicos de manutenção, formatação, redes e reparo eletrônico</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-tech" onclick="ServicesModule.openAddModal()">
+                <i class="fas fa-plus"></i> Novo Serviço
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros de Serviços -->
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="service-search-input" class="search-input"
+                placeholder="Buscar serviço por nome ou descrição...">
+            </div>
+            <div class="filter-actions">
+              <select id="service-category-filter" class="select-filter">
+                <option value="">Todas as Categorias</option>
+                <option value="Formatação">Formatação & Software</option>
+                <option value="Limpeza/Higienização">Limpeza & Manutenção Preventiva</option>
+                <option value="Reparo em Placa">Reparo Eletrônico / Placa-Mãe</option>
+                <option value="Manutenção">Manutenção Geral / Telas</option>
+                <option value="Backup/Recuperação">Recuperação de Dados & Backup</option>
+              </select>
+              <span class="badge badge-aprovado" id="services-count-badge">0 Serviços</span>
+            </div>
+          </div>
+
+          <!-- Tabela de Serviços -->
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nome do Serviço & Detalhes</th>
+                  <th>Categoria</th>
+                  <th>Tempo Médio</th>
+                  <th>Garantia</th>
+                  <th>Preço Padrão</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="services-table-tbody">
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             ABA 4: ORDEM DE SERVIÇOS (O.S.)
+             ========================================== -->
+        <section id="tab-ordens" class="tab-pane">
+          <div class="view-header">
+            <div class="view-heading">
+              <h2><i class="fas fa-file-invoice-dollar" style="color: var(--primary-cyan);"></i> Ordens de Serviço
+                (O.S.)</h2>
+              <p>Gerenciamento completo do fluxo de atendimento, orçamentos, diagnósticos e faturamento</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-tech" onclick="ServiceOrdersModule.openAddModal()">
+                <i class="fas fa-plus"></i> Nova Ordem de Serviço
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros de O.S. -->
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="order-search-input" class="search-input"
+                placeholder="Buscar por número O.S., Cliente, Equipamento ou Série...">
+            </div>
+            <div class="filter-actions">
+              <select id="order-status-filter" class="select-filter">
+                <option value="">Todos os Status</option>
+                <option value="Orçamento">Orçamento</option>
+                <option value="Aprovado">Aprovado</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Aguardando Peças">Aguardando Peças</option>
+                <option value="Pronto">Pronto</option>
+                <option value="Entregue">Entregue / Faturado</option>
+                <option value="Cancelado">Cancelado</option>
+              </select>
+              <span class="badge badge-aprovado" id="orders-count-badge">0 Ordens</span>
+            </div>
+          </div>
+
+          <!-- Tabela de O.S. -->
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nº O.S.</th>
+                  <th>Cliente & Contato</th>
+                  <th>Equipamento / Modelo</th>
+                  <th>Status Atual</th>
+                  <th>Valor Total</th>
+                  <th>Data Entrada</th>
+                  <th>Ações & Impressão</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-tbody">
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             ABA 5: ANOTAÇÕES & TECH LOGS
+             ========================================== -->
+        <section id="tab-anotacoes" class="tab-pane">
+          <div class="view-header">
+            <div class="view-heading">
+              <h2><i class="fas fa-clipboard-list" style="color: var(--primary-cyan);"></i> Anotações, Lembretes &
+                Bancada</h2>
+              <p>Procedimentos técnicos, senhas de teste, ideias e notas rápidas da equipe</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-tech" onclick="NotesModule.openAddModal()">
+                <i class="fas fa-plus"></i> Nova Anotação
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros de Anotações -->
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="note-search-input" class="search-input" placeholder="Buscar nas anotações...">
+            </div>
+            <div class="filter-actions">
+              <select id="note-category-filter" class="select-filter">
+                <option value="">Todas as Categorias</option>
+                <option value="Procedimentos">Procedimentos Técnicos</option>
+                <option value="Urgente">Urgente</option>
+                <option value="Lembretes">Lembretes Gerais</option>
+                <option value="Ideias">Ideias & Projetos</option>
+              </select>
+              <span class="badge badge-aprovado" id="notes-count-badge">0 Notas</span>
+            </div>
+          </div>
+
+          <!-- Grid de Cartões de Anotações -->
+          <div class="notes-grid" id="notes-grid-container">
+            <!-- Preenchido via JS -->
+          </div>
+        </section>
+
+        <!-- ==========================================
+             ABA 6: CONFIGURAÇÕES & BANCO DE DADOS (PROTEGIDA POR SENHA)
+             ========================================== -->
+        <section id="tab-configuracoes" class="tab-pane">
+          
+          <!-- ESTADO 1: BLOQUEADO (EXIGE A MESMA SENHA DO SISTEMA) -->
+          <div id="settings-locked-view" class="settings-lock-container">
+            <div class="settings-lock-card">
+              <div class="settings-lock-icon">
+                <i class="fas fa-shield-halved"></i>
+              </div>
+              <h2 class="settings-lock-title">Configurações & Banco de Dados</h2>
+              <p class="settings-lock-sub">
+                A conexão do banco de dados Google Sheets e as opções avançadas são protegidas.
+                Digite a mesma senha de acesso do sistema para desbloquear.
+              </p>
+
+              <form id="settings-unlock-form" class="settings-unlock-form" onsubmit="SettingsModule.unlock(event)">
+                <div class="input-group" style="text-align: left; margin-bottom: 16px;">
+                  <label><i class="fas fa-lock" style="color: var(--primary-cyan);"></i> Senha do Administrador</label>
+                  <div class="input-wrapper">
+                    <input type="password" id="settings-unlock-pass" class="input-field" placeholder="Digite sua senha de acesso" required autocomplete="current-password">
+                    <i class="fas fa-key"></i>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-tech" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.95rem;">
+                  <i class="fas fa-unlock"></i> Desbloquear Configurações
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- ESTADO 2: DESBLOQUEADO (CONTEÚDO COMPLETO) -->
+          <div id="settings-unlocked-view" style="display: none;">
+            <div class="view-header">
+              <div class="view-heading">
+                <h2><i class="fas fa-gear" style="color: var(--primary-cyan);"></i> Configurações & Banco de Dados</h2>
+                <p>Gerenciamento da planilha Google Sheets como banco de dados, sincronização em nuvem e segurança</p>
+              </div>
+              <div class="header-actions">
+                <button class="btn btn-secondary" onclick="SettingsModule.lock()" style="border-color: rgba(239, 68, 68, 0.4); color: #f87171;">
+                  <i class="fas fa-lock"></i> Bloquear Acesso
+                </button>
+              </div>
+            </div>
+
+            <!-- Grade de Configurações -->
+            <div class="settings-grid">
+              
+              <!-- CARD 1: BANCO DE DADOS GOOGLE SHEETS -->
+              <div class="tech-card" style="grid-column: 1 / -1;">
+                <div class="view-header" style="margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px;">
+                  <div class="view-heading">
+                    <h3 style="font-size: 1.15rem; display: flex; align-items: center; gap: 10px;">
+                      <i class="fas fa-table-cells" style="color: #10b981;"></i>
+                      <span>Banco de Dados Google Sheets (API em Nuvem)</span>
+                    </h3>
+                    <p>Conecte sua planilha para leitura e gravação automática em tempo real</p>
+                  </div>
+                  <button type="button" class="btn btn-secondary" style="font-size: 0.82rem;" onclick="GoogleSheetsUI.openModal()">
+                    <i class="fas fa-up-right-from-square"></i> Abrir Painel Completo
+                  </button>
+                </div>
+
+                <!-- Formulário Inline de Configuração da Planilha -->
+                <form onsubmit="SettingsModule.saveSheetsConfig(event)">
+                  <div class="input-group">
+                    <label style="display: flex; justify-content: space-between; align-items: center;">
+                      <span><i class="fas fa-link" style="color: var(--primary-cyan);"></i> URL do Web App do Google Apps Script</span>
+                      <a href="#" onclick="GoogleSheetsUI.openModal(); GoogleSheetsUI.switchSubTab('guide'); return false;" style="font-size: 0.8rem; color: #10b981; text-decoration: none;">
+                        <i class="fas fa-circle-question"></i> Ver Tutorial e Código do Script
+                      </a>
+                    </label>
+                    <input type="url" id="settings-sheets-url" class="form-control mono" placeholder="https://script.google.com/macros/s/AKfycbx.../exec" required>
+                  </div>
+
+                  <div style="margin: 14px 0;">
+                    <label class="sheets-toggle-card">
+                      <input type="checkbox" id="settings-auto-sync" checked>
+                      <div class="sheets-toggle-info">
+                        <strong><i class="fas fa-bolt" style="color: #f59e0b;"></i> Sincronização Automática em Tempo Real</strong>
+                        <p>Salva automaticamente na planilha sempre que qualquer cliente, produto, serviço, ordem de serviço ou anotação for cadastrado, alterado ou excluído.</p>
+                      </div>
+                    </label>
+                  </div>
+
+                  <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+                    <button type="button" class="btn btn-secondary" onclick="GoogleSheetsUI.testConnection()">
+                      <i class="fas fa-vial"></i> Testar Conexão
+                    </button>
+                    <button type="submit" class="btn btn-tech" style="background: linear-gradient(135deg, #10b981, #059669);">
+                      <i class="fas fa-save"></i> Salvar e Conectar
+                    </button>
+                  </div>
+                </form>
+
+                <!-- Operações de Sincronização Manual -->
+                <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border-subtle);">
+                  <div class="sheets-sync-btns-grid">
+                    <div class="sheets-op-box">
+                      <h5><i class="fas fa-cloud-arrow-down" style="color: #00d2ff;"></i> Puxar Dados da Planilha (Download)</h5>
+                      <p>Substitui os dados locais do ERP pelos dados salvos atualmente na planilha Google Sheets.</p>
+                      <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="GoogleSheetsUI.pullData()">
+                        <i class="fas fa-download"></i> Baixar da Planilha Agora
+                      </button>
+                    </div>
+
+                    <div class="sheets-op-box">
+                      <h5><i class="fas fa-cloud-arrow-up" style="color: #10b981;"></i> Enviar Dados para a Planilha (Upload)</h5>
+                      <p>Envia todo o banco de dados do ERP atual para atualizar as abas da planilha do Google Sheets.</p>
+                      <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="GoogleSheetsUI.pushData()">
+                        <i class="fas fa-upload"></i> Subir Tudo para a Planilha
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 2: BACKUP & RESTAURAÇÃO LOCAL -->
+              <div class="tech-card">
+                <div class="view-heading" style="margin-bottom: 14px;">
+                  <h3 style="font-size: 1.1rem;"><i class="fas fa-database" style="color: var(--primary-cyan);"></i> Backup Local (Arquivo JSON)</h3>
+                  <p>Exporte e importe backups completos do sistema offline</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <button class="btn btn-secondary" onclick="SystemBackup.exportDatabase()" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-download"></i> Exportar Backup Completo (.JSON)
+                  </button>
+                  <button class="btn btn-secondary" onclick="document.getElementById('backup-file-input').click()" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-upload"></i> Restaurar a Partir de Arquivo (.JSON)
+                  </button>
+                  <button class="btn btn-secondary" onclick="SystemBackup.resetDemoData()" style="width: 100%; justify-content: center; color: var(--warning); border-color: rgba(245, 158, 11, 0.3);">
+                    <i class="fas fa-rotate-left"></i> Restaurar Dados Padrão
+                  </button>
+                </div>
+              </div>
+
+              <!-- CARD 3: CONTA ADMINISTRADOR -->
+              <div class="tech-card">
+                <div class="view-heading" style="margin-bottom: 14px;">
+                  <h3 style="font-size: 1.1rem;"><i class="fas fa-user-shield" style="color: #8b5cf6;"></i> Administrador do Sistema</h3>
+                  <p>Informações da conta de acesso logada atualmente</p>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.5); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 14px;">
+                  <div style="font-size: 0.82rem; color: var(--text-muted);">E-mail de Login:</div>
+                  <div style="font-weight: 700; color: var(--text-white); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">thallesfl2021@gmail.com</div>
+                  <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 10px;">Cargo / Nível:</div>
+                  <div style="font-weight: 600; color: #10b981; margin-top: 2px;">Administrador Geral</div>
+                </div>
+                <button class="btn btn-secondary" onclick="Auth.logout()" style="width: 100%; justify-content: center;">
+                  <i class="fas fa-power-off"></i> Encerrar Sessão (Logout)
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAIS DO SISTEMA
+       ========================================== -->
+
+  <!-- MODAL: CLIENTE (CRIAR / EDITAR) -->
+  <div id="client-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title" id="client-modal-title"><i class="fas fa-user-plus"></i> Novo Cliente</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="client-form" onsubmit="ClientsModule.save(event)">
+        <input type="hidden" id="client-id">
+        <div class="modal-body">
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Nome Completo / Razão Social *</label>
+              <input type="text" id="client-name" class="form-control" required
+                placeholder="Ex: Roberto Silva ou Tech LTDA">
+            </div>
+            <div class="input-group">
+              <label>Tipo de Pessoa</label>
+              <select id="client-type" class="form-control">
+                <option value="PF">Pessoa Física (PF)</option>
+                <option value="PJ">Pessoa Jurídica (PJ)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>CPF / CNPJ</label>
+              <input type="text" id="client-doc" class="form-control" placeholder="000.000.000-00">
+            </div>
+            <div class="input-group">
+              <label>WhatsApp / Telefone *</label>
+              <input type="text" id="client-phone" class="form-control" required placeholder="(11) 99999-9999">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>E-mail</label>
+              <input type="email" id="client-email" class="form-control" placeholder="cliente@email.com">
+            </div>
+            <div class="input-group">
+              <label>CEP</label>
+              <input type="text" id="client-cep" class="form-control" placeholder="00000-000">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Endereço Completo</label>
+              <input type="text" id="client-address" class="form-control"
+                placeholder="Rua, Número, Bairro, Complemento">
+            </div>
+            <div class="input-group">
+              <label>Cidade / UF</label>
+              <input type="text" id="client-city" class="form-control" placeholder="São Paulo/SP">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Equipamentos Habituais do Cliente</label>
+            <input type="text" id="client-equipments" class="form-control"
+              placeholder="Ex: Notebook Acer Nitro 5, PC Gamer RTX 4060">
+          </div>
+
+          <div class="input-group">
+            <label>Observações Adicionais</label>
+            <textarea id="client-notes" class="form-control"
+              placeholder="Preferências do cliente, restrições de horário, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-cancel-btn">Cancelar</button>
+          <button type="submit" class="btn btn-tech"><i class="fas fa-save"></i> Salvar Cliente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: PRODUTO (CRIAR / EDITAR) -->
+  <div id="product-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title" id="product-modal-title"><i class="fas fa-box-open"></i> Novo Produto</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="product-form" onsubmit="ProductsModule.save(event)">
+        <input type="hidden" id="product-id">
+        <div class="modal-body">
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Nome do Produto *</label>
+              <input type="text" id="product-name" class="form-control" required
+                placeholder="Ex: SSD NVMe 1TB Kingston">
+            </div>
+            <div class="input-group">
+              <label>Categoria</label>
+              <select id="product-category" class="form-control">
+                <option value="Hardware">Hardware</option>
+                <option value="Armazenamento">Armazenamento</option>
+                <option value="Periféricos">Periféricos</option>
+                <option value="Cabos">Cabos & Adaptadores</option>
+                <option value="Outros">Outros</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="input-group">
+              <label>Código / SKU *</label>
+              <input type="text" id="product-sku" class="form-control" required placeholder="Ex: SSD-1TB-NV2">
+            </div>
+            <div class="input-group">
+              <label>Preço de Custo (R$)</label>
+              <input type="number" step="0.01" id="product-cost" class="form-control" placeholder="0.00">
+            </div>
+            <div class="input-group">
+              <label>Preço de Venda (R$) *</label>
+              <input type="number" step="0.01" id="product-sell" class="form-control" required placeholder="0.00">
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="input-group">
+              <label>Qtd em Estoque</label>
+              <input type="number" id="product-stock" class="form-control" value="0" min="0">
+            </div>
+            <div class="input-group">
+              <label>Estoque Mínimo (Alerta)</label>
+              <input type="number" id="product-min-stock" class="form-control" value="3" min="0">
+            </div>
+            <div class="input-group">
+              <label>Fornecedor / Distribuidor</label>
+              <input type="text" id="product-supplier" class="form-control" placeholder="Ex: AllTech Distribuidora">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-cancel-btn">Cancelar</button>
+          <button type="submit" class="btn btn-tech"><i class="fas fa-save"></i> Salvar Produto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: SERVIÇO (CRIAR / EDITAR) -->
+  <div id="service-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title" id="service-modal-title"><i class="fas fa-tools"></i> Novo Serviço</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="service-form" onsubmit="ServicesModule.save(event)">
+        <input type="hidden" id="service-id">
+        <div class="modal-body">
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Nome do Serviço *</label>
+              <input type="text" id="service-name" class="form-control" required
+                placeholder="Ex: Formatação com Backup">
+            </div>
+            <div class="input-group">
+              <label>Categoria</label>
+              <select id="service-category" class="form-control">
+                <option value="Formatação">Formatação</option>
+                <option value="Limpeza/Higienização">Limpeza / Higienização</option>
+                <option value="Reparo em Placa">Reparo em Placa</option>
+                <option value="Manutenção">Manutenção Geral</option>
+                <option value="Backup/Recuperação">Backup / Recuperação</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="input-group">
+              <label>Preço Padrão (R$) *</label>
+              <input type="number" step="0.01" id="service-price" class="form-control" required placeholder="0.00">
+            </div>
+            <div class="input-group">
+              <label>Tempo Estimado</label>
+              <input type="text" id="service-time" class="form-control" placeholder="Ex: 2 Horas / 24 Horas">
+            </div>
+            <div class="input-group">
+              <label>Prazo de Garantia</label>
+              <input type="text" id="service-warranty" class="form-control" value="90 dias" placeholder="Ex: 90 dias">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Descrição Detalhada do Procedimento</label>
+            <textarea id="service-desc" class="form-control"
+              placeholder="Descreva as etapas técnicas inclusas no serviço..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-cancel-btn">Cancelar</button>
+          <button type="submit" class="btn btn-tech"><i class="fas fa-save"></i> Salvar Serviço</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ORDEM DE SERVIÇO (CRIAR / EDITAR COMPLETO) -->
+  <div id="os-modal" class="modal-overlay">
+    <div class="modal-container large">
+      <div class="modal-header">
+        <h3 class="modal-title" id="os-modal-title"><i class="fas fa-file-invoice"></i> Nova Ordem de Serviço</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="os-form" onsubmit="ServiceOrdersModule.save(event)">
+        <input type="hidden" id="os-id">
+        <div class="modal-body">
+
+          <!-- Seção 1: Cliente e Equipamento -->
+          <div class="form-grid-3">
+            <div class="input-group">
+              <label>Cliente Solicitante *</label>
+              <select id="os-client-select" class="form-control" required>
+                <!-- Preenchido via JS -->
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Tipo de Equipamento *</label>
+              <select id="os-equipment-type" class="form-control" required>
+                <option value="Notebook">Notebook / Portátil</option>
+                <option value="Desktop / PC Gamer">Desktop / PC Gamer</option>
+                <option value="Placa-Mãe / GPU">Placa-Mãe / Placa de Vídeo</option>
+                <option value="Servidor">Servidor</option>
+                <option value="Console / Game">Console de Video-Game</option>
+                <option value="Impressora">Impressora / Multifuncional</option>
+                <option value="Outros">Outro Equipamento</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Marca & Modelo *</label>
+              <input type="text" id="os-brand-model" class="form-control" required
+                placeholder="Ex: Dell G15 5511 ou ASUS B550M">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Número de Série / Tag</label>
+              <input type="text" id="os-serial-number" class="form-control" placeholder="Ex: SN-8839210-BR">
+            </div>
+            <div class="input-group">
+              <label>Acessórios Deixados com o Equipamento</label>
+              <input type="text" id="os-accessories" class="form-control"
+                placeholder="Ex: Carregador Original, Cabo de Força, Case">
+            </div>
+          </div>
+
+          <!-- Seção 2: Defeito e Diagnóstico -->
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Defeito Relatado pelo Cliente *</label>
+              <textarea id="os-defect" class="form-control" required
+                placeholder="Ex: Não liga, desliga sozinho durante jogos, tela piscando..."></textarea>
+            </div>
+            <div class="input-group">
+              <label>Laudo Técnico & Solução Proposta</label>
+              <textarea id="os-diagnostic" class="form-control"
+                placeholder="Ex: Curto na linha primária de 19V, necessário trocar mosfet e pasta térmica..."></textarea>
+            </div>
+          </div>
+
+          <!-- Seção 3: Adição Dinâmica de Serviços e Peças -->
+          <div class="os-items-section">
+            <div class="os-items-header">
+              <strong style="color: var(--text-white); font-size: 0.95rem;">
+                <i class="fas fa-cart-plus" style="color: var(--primary-cyan);"></i> Adicionar Itens à O.S. (Serviços e
+                Peças)
+              </strong>
+            </div>
+
+            <div class="form-grid-2" style="margin-bottom: 12px;">
+              <div style="display: flex; gap: 8px;">
+                <select id="os-add-service-select" class="form-control" style="flex: 1;">
+                  <!-- Preenchido via JS -->
+                </select>
+                <button type="button" class="btn btn-secondary" onclick="ServiceOrdersModule.addItem('service')">
+                  + Add Serviço
+                </button>
+              </div>
+
+              <div style="display: flex; gap: 8px;">
+                <select id="os-add-product-select" class="form-control" style="flex: 1;">
+                  <!-- Preenchido via JS -->
+                </select>
+                <button type="button" class="btn btn-secondary" onclick="ServiceOrdersModule.addItem('product')">
+                  + Add Peça
+                </button>
+              </div>
+            </div>
+
+            <!-- Lista de Itens Adicionados -->
+            <div class="os-items-list" id="os-items-container">
+              <!-- Renderizado via JS -->
+            </div>
+
+            <!-- Box de Totais -->
+            <div class="os-totals-box">
+              <div class="os-total-item">
+                <span style="color: var(--text-muted);">Subtotal:</span>
+                <strong id="os-subtotal-display" class="mono" style="color: var(--text-white);">R$ 0,00</strong>
+              </div>
+              <div class="os-total-item">
+                <label for="os-discount" style="color: var(--text-muted); font-size: 0.85rem;">Desconto (R$):</label>
+                <input type="number" step="0.01" id="os-discount" class="form-control"
+                  style="width: 90px; padding: 4px 8px; height: 32px;" value="0">
+              </div>
+              <div class="os-total-item">
+                <span style="color: var(--primary-cyan); font-weight: 700;">TOTAL GERAL:</span>
+                <span id="os-total-display" class="os-total-highlight mono">R$ 0,00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Seção 4: Status, Datas, Técnico e Pagamento -->
+          <div class="form-grid-4">
+            <div class="input-group">
+              <label>Status da O.S.</label>
+              <select id="os-status" class="form-control">
+                <option value="Orçamento">Orçamento</option>
+                <option value="Aprovado">Aprovado</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Aguardando Peças">Aguardando Peças</option>
+                <option value="Pronto">Pronto</option>
+                <option value="Entregue">Entregue / Faturado</option>
+                <option value="Cancelado">Cancelado</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label>Técnico Responsável</label>
+              <input type="text" id="os-technician" class="form-control" placeholder="Nome do Técnico">
+            </div>
+
+            <div class="input-group">
+              <label>Status Pagamento</label>
+              <select id="os-payment-status" class="form-control">
+                <option value="Pendente">Pendente</option>
+                <option value="Pago">Pago</option>
+                <option value="Parcelado">Parcelado</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label>Forma de Pagamento</label>
+              <select id="os-payment-method" class="form-control">
+                <option value="PIX">PIX</option>
+                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                <option value="Cartão de Débito">Cartão de Débito</option>
+                <option value="Boleto Bancário">Boleto Bancário</option>
+                <option value="Dinheiro">Dinheiro em Espécie</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Data de Entrada</label>
+              <input type="date" id="os-created-at" class="form-control">
+            </div>
+            <div class="input-group">
+              <label>Previsão de Entrega</label>
+              <input type="date" id="os-promised-at" class="form-control">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-cancel-btn">Cancelar</button>
+          <button type="submit" class="btn btn-tech"><i class="fas fa-save"></i> Salvar Ordem de Serviço</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ANOTAÇÃO (CRIAR / EDITAR) -->
+  <div id="note-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title" id="note-modal-title"><i class="fas fa-note-sticky"></i> Nova Anotação</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="note-form" onsubmit="NotesModule.save(event)">
+        <input type="hidden" id="note-id">
+        <div class="modal-body">
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Título da Nota *</label>
+              <input type="text" id="note-title" class="form-control" required placeholder="Ex: Procedimento BIOS Dell">
+            </div>
+            <div class="input-group">
+              <label>Categoria</label>
+              <select id="note-category" class="form-control">
+                <option value="Procedimentos">Procedimentos Técnicos</option>
+                <option value="Urgente">Urgente</option>
+                <option value="Lembretes">Lembretes Gerais</option>
+                <option value="Ideias">Ideias & Projetos</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label>Cor de Destaque</label>
+              <select id="note-color" class="form-control">
+                <option value="#00d2ff">Azul Elétrico (Padrão)</option>
+                <option value="#10b981">Verde (Sucesso / OK)</option>
+                <option value="#f59e0b">Âmbar (Atenção)</option>
+                <option value="#ef4444">Vermelho (Urgente)</option>
+                <option value="#8b5cf6">Roxo (Estratégico)</option>
+              </select>
+            </div>
+            <div class="input-group" style="justify-content: center; margin-top: 20px;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" id="note-pinned" style="width: 18px; height: 18px;">
+                <span>Fixar no Topo</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Conteúdo da Anotação / Checklist *</label>
+            <textarea id="note-content" class="form-control" style="min-height: 140px;" required
+              placeholder="Escreva as anotações, comandos, passos de teste ou lembretes..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-cancel-btn">Cancelar</button>
+          <button type="submit" class="btn btn-tech"><i class="fas fa-save"></i> Salvar Anotação</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: VISUALIZADOR & IMPRESSÃO DE O.S. (A4 / COMPROVANTE) -->
+  <div id="print-preview-modal" class="modal-overlay">
+    <div class="modal-container large" style="max-height: 95vh;">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-print" style="color: var(--primary-cyan);"></i> Comprovante Oficial de
+          Ordem de Serviço</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="print-preview-content"
+        style="background: #e2e8f0; padding: 24px; display: flex; justify-content: center;">
+        <!-- Preenchido dinamicamente com folha A4 -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary modal-cancel-btn">Fechar</button>
+        <button type="button" class="btn btn-tech" onclick="window.print()">
+          <i class="fas fa-print"></i> Imprimir / Salvar PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GOOGLE SHEETS BANCO DE DADOS -->
+  <div id="sheets-modal" class="modal-overlay">
+    <div class="modal-container large" style="max-height: 92vh;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-table-cells" style="color: #10b981;"></i>
+          <span>Integração Google Sheets como Banco de Dados</span>
+        </h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding-top: 10px;">
+        <!-- Abas do Modal -->
+        <div class="sheets-modal-tabs">
+          <button type="button" class="sheets-tab-btn active" onclick="GoogleSheetsUI.switchSubTab('conn')">
+            <i class="fas fa-sliders"></i> Conexão & Sincronização
+          </button>
+          <button type="button" class="sheets-tab-btn" onclick="GoogleSheetsUI.switchSubTab('guide')">
+            <i class="fas fa-book-bookmark"></i> Como Configurar (Passo a Passo)
+          </button>
+        </div>
+
+        <!-- SUB-ABA 1: CONEXÃO & SINCRONIZAÇÃO -->
+        <div id="sheets-subtab-conn" class="sheets-subtab-pane active">
+          <!-- Card de Status da Conexão -->
+          <div class="sheets-status-card" id="sheets-status-card">
+            <div class="sheets-status-left">
+              <div class="sheets-status-icon-wrapper" id="sheets-status-icon-wrapper">
+                <i class="fas fa-cloud" id="sheets-status-icon"></i>
+              </div>
+              <div>
+                <div class="sheets-status-title" id="sheets-status-title">Status: Não Conectado (Modo Local)</div>
+                <div class="sheets-status-sub" id="sheets-status-sub">Os dados estão sendo salvos apenas no navegador
+                  (LocalStorage).</div>
+              </div>
+            </div>
+            <div class="sheets-status-right">
+              <div class="sheets-sync-time" id="sheets-sync-time">Última Sincronização: Nunca</div>
+            </div>
+          </div>
+
+          <!-- Formulário de Configuração -->
+          <form id="sheets-config-form" onsubmit="GoogleSheetsUI.saveConfig(event)" style="margin-top: 20px;">
+            <div class="input-group">
+              <label style="display: flex; justify-content: space-between; align-items: center;">
+                <span><i class="fas fa-link" style="color: var(--primary-cyan);"></i> URL do Web App do Google Apps
+                  Script *</span>
+                <a href="#" onclick="GoogleSheetsUI.switchSubTab('guide'); return false;"
+                  style="font-size: 0.8rem; color: #10b981; text-decoration: none;">
+                  <i class="fas fa-question-circle"></i> Onde conseguir esta URL?
+                </a>
+              </label>
+              <input type="url" id="sheets-script-url" class="form-control mono"
+                placeholder="https://script.google.com/macros/s/AKfycbx.../exec" required>
+              <span style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; display: block;">
+                Cole o link gerado após implantar o script no Google Sheets (tipo: Web App / Qualquer pessoa).
+              </span>
+            </div>
+
+            <div class="sheets-options-grid">
+              <label class="sheets-toggle-card">
+                <input type="checkbox" id="sheets-auto-sync" checked>
+                <div class="sheets-toggle-info">
+                  <strong><i class="fas fa-bolt" style="color: #f59e0b;"></i> Sincronização Automática em Tempo
+                    Real</strong>
+                  <p>Salva automaticamente na planilha sempre que você cadastrar, alterar ou excluir clientes, produtos,
+                    serviços, ordens ou notas.</p>
+                </div>
+              </label>
+            </div>
+
+            <div class="sheets-actions-bar">
+              <button type="button" class="btn btn-secondary" id="btn-test-sheets"
+                onclick="GoogleSheetsUI.testConnection()">
+                <i class="fas fa-vial"></i> Testar Conexão
+              </button>
+              <button type="submit" class="btn btn-tech" style="background: linear-gradient(135deg, #10b981, #059669);">
+                <i class="fas fa-save"></i> Salvar Configuração
+              </button>
+            </div>
+          </form>
+
+          <!-- Painel de Operações em Lote / Sincronização Manual -->
+          <div class="sheets-sync-operations">
+            <h4
+              style="font-size: 0.95rem; margin-bottom: 12px; color: var(--text-white); display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-arrows-rotate" style="color: var(--primary-cyan);"></i> Sincronização Manual em 2 Vias
+            </h4>
+            <div class="sheets-sync-btns-grid">
+              <div class="sheets-op-box">
+                <h5><i class="fas fa-cloud-arrow-down" style="color: #00d2ff;"></i> Puxar Dados da Planilha (Download)
+                </h5>
+                <p>Substitui os dados locais do ERP pelos dados salvos atualmente na planilha do Google Sheets.</p>
+                <button type="button" class="btn btn-secondary"
+                  style="width: 100%; border-color: rgba(0, 210, 255, 0.4);" onclick="GoogleSheetsUI.pullData()">
+                  <i class="fas fa-download"></i> Baixar da Planilha Agora
+                </button>
+              </div>
+
+              <div class="sheets-op-box">
+                <h5><i class="fas fa-cloud-arrow-up" style="color: #10b981;"></i> Enviar Dados para a Planilha (Upload
+                  Inicial)</h5>
+                <p>Envia todo o banco de dados do ERP atual para preencher as abas da planilha do Google Sheets.</p>
+                <button type="button" class="btn btn-secondary"
+                  style="width: 100%; border-color: rgba(16, 185, 129, 0.4);" onclick="GoogleSheetsUI.pushData()">
+                  <i class="fas fa-upload"></i> Subir Tudo para a Planilha
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-ABA 2: GUIA PASSO A PASSO & CÓDIGO -->
+        <div id="sheets-subtab-guide" class="sheets-subtab-pane">
+          <div class="sheets-guide-steps">
+            <div class="guide-step-card">
+              <div class="guide-step-number">1</div>
+              <div class="guide-step-content">
+                <strong>Crie sua Planilha no Google Drive</strong>
+                <p>Acesse o <a href="https://sheets.new" target="_blank"
+                    style="color: #10b981; font-weight: 600;">sheets.new</a> e crie uma planilha vazia. Nomeie como
+                  desejar (ex: <code>TLE ERP - Banco de Dados</code>).</p>
+              </div>
+            </div>
+
+            <div class="guide-step-card">
+              <div class="guide-step-number">2</div>
+              <div class="guide-step-content">
+                <strong>Abra o Editor de Scripts</strong>
+                <p>No menu superior da planilha, clique em <strong>Extensões</strong> &gt; <strong>Apps Script</strong>.
+                </p>
+              </div>
+            </div>
+
+            <div class="guide-step-card">
+              <div class="guide-step-number">3</div>
+              <div class="guide-step-content">
+                <strong>Cole o Código e Crie as Tabelas</strong>
+                <p>Apague o código de exemplo que estiver lá, copie o código abaixo e cole no editor. Em seguida,
+                  selecione a função <code>setupSheets</code> no seletor de funções e clique em
+                  <strong>Executar</strong> para formatar todas as abas automaticamente.
+                </p>
+                <div style="margin-top: 10px;">
+                  <button type="button" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;"
+                    onclick="GoogleSheetsUI.copyScriptCode()">
+                    <i class="fas fa-copy"></i> Copiar Código do Apps Script
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-step-card">
+              <div class="guide-step-number">4</div>
+              <div class="guide-step-content">
+                <strong>Implantar como App da Web</strong>
+                <p>Clique no botão azul superior <strong>Implantar (Deploy)</strong> &gt; <strong>Nova
+                    implantação</strong>:</p>
+                <ul style="margin: 6px 0 0 18px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                  <li>Selecione o tipo: <strong>App da Web</strong> (ícone de engrenagem).</li>
+                  <li>Executar como: <strong>Eu (seu email)</strong>.</li>
+                  <li>Quem pode acessar: <strong>Qualquer pessoa (Anyone)</strong>.</li>
+                </ul>
+                <p style="margin-top: 6px;">Clique em <strong>Implantar</strong>, copie a <strong>URL do App da
+                    Web</strong> (termina em <code>/exec</code>), volte na aba "Conexão" deste painel e cole a URL!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prévia do Código -->
+          <div style="margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.85rem; color: var(--text-white); font-weight: 600;"><i class="fas fa-code"
+                  style="color: var(--primary-cyan);"></i> Código do Google Apps Script (Code.gs)</span>
+              <button type="button" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;"
+                onclick="GoogleSheetsUI.copyScriptCode()">
+                <i class="fas fa-copy"></i> Copiar
+              </button>
+            </div>
+            <pre class="sheets-code-block" id="sheets-code-preview"><code>// Código disponível no arquivo google-apps-script.js
+// Clique no botão "Copiar Código" acima para copiar o script completo!</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary modal-cancel-btn">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTAINER DE NOTIFICAÇÕES (TOAST) -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="./js/app.js"></script>
+</body>
+
+</html>
